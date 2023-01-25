@@ -1,3 +1,5 @@
+const { where } = require("sequelize");
+
 const UserModel = require("../models").user;
 
 async function getListUser(req, res) {
@@ -95,9 +97,93 @@ async function getDetailUserByParams(req, res) {
   }
 }
 
+//update
+async function updateUser(req, res) {
+  try {
+    const {id} = req.params
+    const payload = req.body
+    const {nama, tempatLahir, tanggalLahir,} = payload
+    const user = await UserModel.findByPk(id);
+    if (user === null) {
+      res.status(404).json({
+        status: "Fail",
+        message: "User not found",
+      });
+    }
+    await UserModel.update(
+      {
+        nama,
+        tempatLahir,
+        tanggalLahir
+      },
+      {
+        where: {
+          id: id
+        }
+      }
+    )
+    // await UserModel.update(
+    //   {
+    //     nama: nama,
+    //     tempatLahir :tempatLahir,
+    //     tanggalLahir: tanggalLahir
+    //   },
+    //   {
+    //     where: {
+    //       id: id
+    //     }
+    //   }
+    // )
+    res.json({
+      status: "Success",
+      message: "Updated",
+      data: user
+    })
+  } catch (error) {
+    console.log(error);
+    res.status(403).json({
+      status: "Fail",
+      message: "There is something wrong",
+    });
+  }
+}
+
+//delete
+async function deleteUser(req, res) {
+  try {
+    const {id} = req.params
+    const user = await UserModel.findByPk(id);
+    if (user === null) {
+      res.status(404).json({
+        status: "Fail",
+        message: "User not found",
+      });
+    }
+    await UserModel.destroy({
+      where: {
+        id: id
+      }
+    })
+    res.json({
+      status: "Success",
+      message: "user dihapus",
+      id: id
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(403).json({
+      status: "Fail",
+      message: "There is something wrong",
+    });
+  }
+}
+
+
 module.exports = {
   getListUser,
   createUser,
   getDetailUserById,
   getDetailUserByParams,
+  updateUser,
+  deleteUser,
 };

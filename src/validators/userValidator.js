@@ -23,4 +23,16 @@ const createUserValidator = [
     }),
 ];
 
-module.exports = createUserValidator;
+const updateUserValidator = [
+  check("nama")
+  .isLength({
+    min: 1,
+  })
+  .withMessage("Wajib Isi")
+]
+
+module.exports = {
+  createUserValidator,
+  updateUserValidator
+};
+
