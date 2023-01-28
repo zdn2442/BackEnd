@@ -1,8 +1,10 @@
 const express = require("express");
+const { createArtikel, getArtikel, updateArtikel, deleteArtikel } = require("../controllers/artikelController");
 const { register, login } = require("../controllers/AuthController");
 const { getListProduk, createProduk, getDetailProdukById, getDetailProdukByParams } = require("../controllers/ProdukController");
 const { getListUser, createUser, getDetailUserById, getDetailUserByParams, updateUser, deleteUser} = require("../controllers/UserController");
-const validationResultMiddleware = require("../middleware/validationResult.jsMiddleware");
+const jwtValidateMiddleware = require("../middleware/JwtValidateMiddleware");
+const validationResultMiddleware = require("../middleware/validationResultMiddleware.js");
 const createProdukValidator = require("../validators/produkValidator");
 const { createUserValidator, updateUserValidator } = require("../validators/userValidator");
 const routers = express.Router();
@@ -10,6 +12,15 @@ const routers = express.Router();
 //auth
 routers.post("/register", register);
 routers.post("/login", login);
+
+//jwt
+routers.use(jwtValidateMiddleware)
+
+//artikel
+routers.post("/artikel/create", createArtikel)
+routers.get("/artikel", getArtikel)
+routers.post("/artikel/update/:id", updateArtikel)
+routers.delete("/artikel/delete/:id", deleteArtikel)
 
 //user
 routers.get("/user/list", getListUser);

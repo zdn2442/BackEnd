@@ -7,7 +7,7 @@ const errorHandling = require("./src/middleware/errorhandling");
 const bodyParser = require("body-parser");
 const consoleM = require("./src/middleware/console");
 require('dotenv').config()
-const port =  8080;
+const port = process.env.PORT || 8080;
 
 app.use(express.json());
 app.use(express.static("/src/storage/uploads"));

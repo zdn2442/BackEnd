@@ -63,7 +63,7 @@ async function login(req, res) {
       }
       ,process.env.JWT_SECRET,
       {
-        expiresIn: "120s"
+        expiresIn: "30d"
       })
       res.json({
         status: "Success",
