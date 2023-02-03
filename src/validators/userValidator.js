@@ -31,8 +31,29 @@ const updateUserValidator = [
   .withMessage("Wajib Isi")
 ]
 
+const updatePassValidator = [
+  check("new_password")
+  .isLength({
+    min: 8,
+  })
+  .withMessage("Isi Wajib 8 karakter"),
+  check("password")
+  .isLength({
+    min: 8,
+  })
+  .withMessage("Isi Wajib 8 karakter"),
+  check("email")
+  .isEmail()
+  .withMessage("harus tipe email")
+  .isLength({
+    min: 1,
+  })
+  .withMessage("Wajib Isi")
+]
+
 module.exports = {
   createUserValidator,
-  updateUserValidator
+  updateUserValidator,
+  updatePassValidator
 };
 
