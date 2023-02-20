@@ -15,6 +15,7 @@ const sendEmailHandle = async (email, subject, template, context) => {
     const transporter = nodemailer.createTransport({
       host: process.env.MAIL_HOST,
       port: process.env.MAIL_PORT,
+      secure: true,
       auth: {
         user: process.env.MAIL_USERNAME,
         pass: process.env.MAIL_PASSWORD,
@@ -32,7 +33,7 @@ const sendEmailHandle = async (email, subject, template, context) => {
 
     try {
       await transporter.sendMail({
-        form: "no-reply@belajar-express.com",
+        from: "latihan-email@smkmadinatulquran.sch.id",
         to: email,
         subject: subject,
         template: template,

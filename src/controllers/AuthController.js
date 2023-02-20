@@ -5,7 +5,7 @@ var jwt = require("jsonwebtoken");
 const { sendEmailHandle } = require("../mail");
 const crypto = require("crypto");
 const dayjs = require("dayjs");
-require("dotenv").config();
+ 
 
 //register
 async function register(req, res) {
@@ -63,6 +63,7 @@ async function login(req, res) {
     const token = jwt.sign(
       {
         id: user?.id,
+        
         email: user?.email,
         nama: user?.nama,
       },
@@ -231,7 +232,7 @@ async function forPassEmail(req, res) {
       } else {
         let hashPassword = await bcrypt.hash(newPassword, 10);
 
-        if (newPassword === null) {
+        if (newPassword === "") {
           res.status(403).json({
             status: "Fail",
             message: "Password must be filled",
@@ -268,16 +269,6 @@ async function forPassEmail(req, res) {
     });
   }
 }
-//
-/** 
- * 1. reset pass with email
- - token & userId exist?
- - error res
- - is it expire?
- - error res
- - reset with getting payload
- - yatta
- **/
 
 module.exports = {
   updatePass,

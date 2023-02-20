@@ -1,5 +1,5 @@
 const { check } = require("express-validator");
-const UserModel = require("../models").user;
+const UserModel = require("../models").userSekolah;
 
 const createUserValidator = [
   check("nama")
@@ -21,6 +21,16 @@ const createUserValidator = [
         }
       });
     }),
+    check("password")
+    .isLength({
+      min: 1,
+    })
+    .withMessage("Wajib Isi"),
+    check("role")
+    .isLength({
+      min: 1,
+    })
+    .withMessage("Wajib Isi"),
 ];
 
 const updateUserValidator = [
