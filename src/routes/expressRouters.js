@@ -26,33 +26,33 @@ routers.post("/login", login);
 routers.use(jwtValidateMiddleware)
 
 //materi
-routers.post("/materi/create", createMult)
-routers.put("/materi/update/:id", update)
-routers.delete("/materi/delete/:id", deleteMult)
-routers.get("/materi/all", getAllMateri)
-routers.get("/materi/personal", getPersonalMateri)
+// routers.post("/materi/create", createMult)
+// routers.put("/materi/update/:id", update)
+// routers.delete("/materi/delete/:id", deleteMult)
+// routers.get("/materi/all", getAllMateri)
+// routers.get("/materi/personal", getPersonalMateri)
 
-//artikel
-routers.post("/artikel/create", createArtikel)
-routers.post("/artikel/create/bulk", createArtikelBulk)
-routers.post("/artikel/create/multi", createArtikelMulti)
-routers.get("/artikel", getArtikel)
-routers.post("/artikel/update/:id", updateArtikel)
-routers.delete("/artikel/delete/:id", deleteArtikel)
-routers.delete("/artikel/delete/try/multi", deleteArtikelMulti)
+// //artikel
+// routers.post("/artikel/create", createArtikel)
+// routers.post("/artikel/create/bulk", createArtikelBulk)
+// routers.post("/artikel/create/multi", createArtikelMulti)
+// routers.get("/artikel", getArtikel)
+// routers.post("/artikel/update/:id", updateArtikel)
+// routers.delete("/artikel/delete/:id", deleteArtikel)
+// routers.delete("/artikel/delete/try/multi", deleteArtikelMulti)
 
-//user
-routers.get("/user/list", getListUser);
-routers.post("/user/create", createUserValidator, validationResultMiddleware, createUser);
-routers.get("/user/detail/:id", getDetailUserById);
-routers.put("/user/update/:id", updateUserValidator, validationResultMiddleware, updateUser);
-routers.get("/user/list/:email", getDetailUserByParams);
-routers.delete("/user/delete/:id", deleteUser);
+// //user
+// routers.get("/user/list", getListUser);
+// routers.post("/user/create", createUserValidator, validationResultMiddleware, createUser);
+// routers.get("/user/detail/:id", getDetailUserById);
+// routers.put("/user/update/:id", updateUserValidator, validationResultMiddleware, updateUser);
+// routers.get("/user/list/:email", getDetailUserByParams);
+// routers.delete("/user/delete/:id", deleteUser);
 
-//produk
-routers.get("/produk/list", getListProduk);
-routers.post("/produk/create", createProdukValidator, validationResultMiddleware, createProduk);
-routers.get("/produk/detail/:id", getDetailProdukById);
-routers.get("/produk/list/:brand", getDetailProdukByParams);
+// //produk
+// routers.get("/produk/list", getListProduk);
+// routers.post("/produk/create", createProdukValidator, validationResultMiddleware, createProduk);
+// routers.get("/produk/detail/:id", getDetailProdukById);
+// routers.get("/produk/list/:brand", getDetailProdukByParams);
 
-module.exports = routers;
+// module.exports = routers;
