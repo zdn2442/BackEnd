@@ -1,10 +1,36 @@
 const { where } = require("sequelize");
+const models = require("../models");
+const { Op } = require("sequelize");
+const {checkQuery} = require("../utils")
 
 const UserModel = require("../models").user;
 
 async function getListUser(req, res) {
+  const {mapel} = req.query
   try {
-    const users = await UserModel.findAll();
+    const users = await UserModel.findAll({
+      include: [
+        {
+          model: models.identitas,
+          require: true,
+          as: "identitas",
+          attributes: ["golonganDarah", "alamat"],
+        },
+        {
+          model: models.nilai,
+          require: true,
+          as: "nilai",
+          attributes: ["mapel", "nilai"],
+          where: {
+            ...(checkQuery(mapel) && {
+              mapel: {
+                [Op.substring]: mapel,
+              },
+            }),
+          },
+        },
+      ],
+    });
     res.json({
       status: "success",
       message: "Data User Ditemukan",
@@ -12,6 +38,8 @@ async function getListUser(req, res) {
     });
     console.log(users);
   } catch (error) {
+    console.log(error
+      );
     res.status(404).json({
       status: "Fail",
       message: "Rute tidak ditemukan",
@@ -47,7 +75,25 @@ async function createUser(req, res) {
 async function getDetailUserById(req, res) {
   try {
     const id = req.params.id;
-    const user = await UserModel.findByPk(id);
+    const user = await UserModel.findOne({
+      where: {
+        id,
+      },
+      include: [
+        {
+          model: models.identitas,
+          require: true,
+          as: "identitas",
+          attributes: ["golonganDarah", "alamat"],
+        },
+        {
+          model: models.nilai,
+          require: true,
+          as: "nilai",
+          attributes: ["mapel", "nilai"],
+        },
+      ],
+    });
     if (user === null) {
       res.status(404).json({
         status: "Fail",
@@ -100,9 +146,9 @@ async function getDetailUserByParams(req, res) {
 //update
 async function updateUser(req, res) {
   try {
-    const {id} = req.params
-    const payload = req.body
-    const {nama, tempatLahir, tanggalLahir,} = payload
+    const { id } = req.params;
+    const payload = req.body;
+    const { nama, tempatLahir, tanggalLahir } = payload;
     const user = await UserModel.findByPk(id);
     if (user === null) {
       res.status(404).json({
@@ -114,14 +160,14 @@ async function updateUser(req, res) {
       {
         nama,
         tempatLahir,
-        tanggalLahir
+        tanggalLahir,
       },
       {
         where: {
-          id: id
-        }
+          id: id,
+        },
       }
-    )
+    );
     // await UserModel.update(
     //   {
     //     nama: nama,
@@ -137,8 +183,8 @@ async function updateUser(req, res) {
     res.json({
       status: "Success",
       message: "Updated",
-      data: user
-    })
+      data: user,
+    });
   } catch (error) {
     console.log(error);
     res.status(403).json({
@@ -151,7 +197,7 @@ async function updateUser(req, res) {
 //delete
 async function deleteUser(req, res) {
   try {
-    const {id} = req.params
+    const { id } = req.params;
     const user = await UserModel.findByPk(id);
     if (user === null) {
       res.status(404).json({
@@ -161,13 +207,13 @@ async function deleteUser(req, res) {
     }
     await UserModel.destroy({
       where: {
-        id: id
-      }
-    })
+        id: id,
+      },
+    });
     res.json({
       status: "Success",
       message: "user dihapus",
-      id: id
+      id: id,
     });
   } catch (error) {
     console.log(error);
@@ -177,7 +223,6 @@ async function deleteUser(req, res) {
     });
   }
 }
-
 
 module.exports = {
   getListUser,

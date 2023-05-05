@@ -2,7 +2,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('artikels', {
+    await queryInterface.createTable('identitas', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -11,26 +11,18 @@ module.exports = {
       },
       userId: {
         type: Sequelize.INTEGER,
-        onDelete: 'CASCADE',
-        onUpdate: 'CASCADE',
-        references: {
-          model: "users",
-          key: "id",
-          as: "userId"
-        },
-        allowNull: false
       },
-      title: {
-        type: Sequelize.STRING,
-        allowNull: false
+      nama: {
+        type: Sequelize.STRING
       },
-      year: {
-        type: Sequelize.INTEGER,
-        allowNull: false
+      alamat: {
+        type: Sequelize.TEXT
       },
-      description: {
-        type: Sequelize.TEXT,
-        allowNull: false
+      tempatLahir: {
+        type: Sequelize.STRING
+      },
+      tanggalLahir: {
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,
@@ -43,6 +35,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('artikels');
+    await queryInterface.dropTable('identitas');
   }
 };

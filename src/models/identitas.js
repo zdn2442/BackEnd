@@ -15,8 +15,10 @@ module.exports = (sequelize, DataTypes) => {
   }
   identitas.init({
     userId: DataTypes.INTEGER,
-    golonganDarah: DataTypes.STRING,
-    alamat: DataTypes.STRING
+    nama: DataTypes.STRING,
+    alamat: DataTypes.TEXT,
+    tempatLahir: DataTypes.STRING,
+    tanggalLahir: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'identitas',

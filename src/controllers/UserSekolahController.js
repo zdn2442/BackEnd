@@ -1,4 +1,4 @@
-const UserModel = require("../models").userSekolah;
+const UserModel = require("../models").user;
 const bcrypt = require("bcrypt");
 var jwt = require("jsonwebtoken");
 require("dotenv").config();
@@ -6,13 +6,12 @@ require("dotenv").config();
 async function register(req, res) {
   try {
     const payload = req.body;
-    const { nama, email, password, role } = payload;
+    const { nama, email, password, } = payload;
     let hashPassword = await bcrypt.hashSync(password, 10);
     await UserModel.create({
       nama,
       email,
       password: hashPassword,
-      role,
     });
     res.status(201).json({
       status: "Success",

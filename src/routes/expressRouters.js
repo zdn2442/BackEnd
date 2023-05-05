@@ -1,9 +1,11 @@
 const express = require("express");
 const { createArtikel, getArtikel, updateArtikel, deleteArtikel, createArtikelBulk, createArtikelMulti, deleteArtikelMulti } = require("../controllers/artikelController");
 const { createMult, update, deleteMult, getAllMateri, getPersonalMateri } = require("../controllers/materiController");
+const { getlistNilai } = require("../controllers/nilaiController");
 // const { register, login, updatePass, forPass, forPassEmail } = require("../controllers/AuthController");
 const { getListProduk, createProduk, getDetailProdukById, getDetailProdukByParams } = require("../controllers/ProdukController");
 const { getListUser, createUser, getDetailUserById, getDetailUserByParams, updateUser, deleteUser} = require("../controllers/UserController");
+const { userRole, getUser, getUserRole } = require("../controllers/UserRoleController");
 const { register, login } = require("../controllers/UserSekolahController");
 const jwtValidateMiddleware = require("../middleware/JwtValidateMiddleware");
 const validationResultMiddleware = require("../middleware/validationResultMiddleware.js");
@@ -19,11 +21,18 @@ const routers = express.Router();
 // routers.put("/update-password", updatePassValidator, validationResultMiddleware, updatePass);
 
 //auth ujian
-routers.post("/register", createUserValidator, validationResultMiddleware, register)
+routers.post("/register", register)
 routers.post("/login", login);
+
+routers.get("/users/role/user-role", userRole)
+routers.get("/users", getUser)
+routers.get("/users/role", getUserRole)
 
 //jwt
 routers.use(jwtValidateMiddleware)
+
+//nilai
+routers.get("/nilai/list", getlistNilai)
 
 //materi
 routers.post("/materi/create", createMult)
