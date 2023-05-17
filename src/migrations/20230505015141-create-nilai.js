@@ -10,13 +10,41 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       userId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
+        references: {
+          model: "users",
+          key: "id",
+          as: "userId"
+        },
+        allowNull: false,
+      },
+      guruId: {
+        type: Sequelize.INTEGER,
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
+        references: {
+          model: "gurus",
+          key: "id",
+          as: "guruId"
+        },
+        allowNull: false,
       },
       mapelId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
+        references: {
+          model: "mapels",
+          key: "id",
+          as: "mapelId"
+        },
+        allowNull: false,
       },
       nilai: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        allowNull: false,
       },
       createdAt: {
         allowNull: false,
